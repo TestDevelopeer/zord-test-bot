@@ -33,7 +33,7 @@ return [
     'bots' => [
         'mybot' => [
             'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
-            'webhook_url' => "https://" . env('TELEGRAM_WEBHOOK_DOMAIN') . "/telegram/webhook",
+            'webhook_url' => "https://" . env('TELEGRAM_WEBHOOK_DOMAIN') . "/api/v1/telegram/webhook",
             /*
              * @see https://core.telegram.org/bots/api#update
              */

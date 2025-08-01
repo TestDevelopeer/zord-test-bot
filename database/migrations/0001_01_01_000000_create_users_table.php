@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->integer('telegram_chat_id')->nullable()->unique();
+            $table->string('name')->nullable()->unique();
+            $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('telegram_status')->default('connected');
+            $table->integer('telegram_clicks')->default(0);
             $table->timestamps();
         });
 

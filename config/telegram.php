@@ -3,7 +3,7 @@
 use Telegram\Bot\Commands\HelpCommand;
 
 return [
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Your Telegram Bots
     |--------------------------------------------------------------------------
@@ -30,25 +30,26 @@ return [
     |                       Acme\Project\Commands\BotFather\ByeCommand::class,
     |             ]
     */
-    'bots' => [
-        'mybot' => [
-            'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
-            'webhook_url' => "https://" . env('TELEGRAM_WEBHOOK_DOMAIN') . "/api/v1/telegram/webhook",
-            /*
+	'bots' => [
+		'mybot' => [
+			'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
+			'webhook_url' => env('TELEGRAM_WEBHOOK_DOMAIN') . "/api/v1/telegram/webhook",
+			/*
              * @see https://core.telegram.org/bots/api#update
              */
-            'allowed_updates' => null,
-            'commands' => [
-                // Acme\Project\Commands\MyTelegramBot\BotCommand::class
-            ],
-        ],
+			'allowed_updates' => null,
+			'commands' => [
+				\App\Telegram\Bot\Commands\StartCommand::class,
+				// Acme\Project\Commands\MyTelegramBot\BotCommand::class
+			],
+		],
 
-        //        'mySecondBot' => [
-        //            'token' => '123456:abc',
-        //        ],
-    ],
+		//        'mySecondBot' => [
+		//            'token' => '123456:abc',
+		//        ],
+	],
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Default Bot Name
     |--------------------------------------------------------------------------
@@ -57,9 +58,9 @@ return [
     | your default bot for regular use.
     |
     */
-    'default' => 'mybot',
+	'default' => 'mybot',
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Asynchronous Requests [Optional]
     |--------------------------------------------------------------------------
@@ -70,9 +71,9 @@ return [
     | Possible Values: (Boolean) "true" OR "false"
     |
     */
-    'async_requests' => env('TELEGRAM_ASYNC_REQUESTS', false),
+	'async_requests' => env('TELEGRAM_ASYNC_REQUESTS', false),
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | HTTP Client Handler [Optional]
     |--------------------------------------------------------------------------
@@ -83,9 +84,9 @@ return [
     | Default: GuzzlePHP
     |
     */
-    'http_client_handler' => null,
+	'http_client_handler' => null,
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Base Bot Url [Optional]
     |--------------------------------------------------------------------------
@@ -96,9 +97,9 @@ return [
     | Default: https://api.telegram.org/bot
     |
     */
-    'base_bot_url' => null,
+	'base_bot_url' => null,
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Resolve Injected Dependencies in commands [Optional]
     |--------------------------------------------------------------------------
@@ -110,9 +111,9 @@ return [
     | Possible Values: (Boolean) "true" OR "false"
     |
     */
-    'resolve_command_dependencies' => true,
+	'resolve_command_dependencies' => true,
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Register Telegram Global Commands [Optional]
     |--------------------------------------------------------------------------
@@ -128,11 +129,11 @@ return [
     | will respond with a list of available commands and description.
     |
     */
-    'commands' => [
-        HelpCommand::class,
-    ],
+	'commands' => [
+		HelpCommand::class,
+	],
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Command Groups [Optional]
     |--------------------------------------------------------------------------
@@ -150,22 +151,22 @@ return [
     |
     | Examples shown below are by the group type for you to understand each of them.
     */
-    'command_groups' => [
-        /* // Group Type: 1
+	'command_groups' => [
+		/* // Group Type: 1
            'commmon' => [
                 Acme\Project\Commands\TodoCommand::class,
                 Acme\Project\Commands\TaskCommand::class,
            ],
         */
 
-        /* // Group Type: 2
+		/* // Group Type: 2
            'subscription' => [
                 'start', // Shared Command Name.
                 'stop', // Shared Command Name.
            ],
         */
 
-        /* // Group Type: 3
+		/* // Group Type: 3
             'auth' => [
                 Acme\Project\Commands\LoginCommand::class,
                 Acme\Project\Commands\SomeCommand::class,
@@ -183,17 +184,16 @@ return [
             ],
         */
 
-        /* // Group Type: 4
+		/* // Group Type: 4
            'myBot' => [
                 'admin', // Command Group Name.
                 'subscription', // Command Group Name.
                 'status', // Shared Command Name.
                 'Acme\Project\Commands\BotCommand' // Full Path to Command Class.
            ],
-        */
-    ],
+        */],
 
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Shared Commands [Optional]
     |--------------------------------------------------------------------------
@@ -209,9 +209,9 @@ return [
     | Think of this as a central storage, to register, reuse and maintain them across all bots.
     |
     */
-    'shared_commands' => [
-        // 'start' => Acme\Project\Commands\StartCommand::class,
-        // 'stop' => Acme\Project\Commands\StopCommand::class,
-        // 'status' => Acme\Project\Commands\StatusCommand::class,
-    ],
+	'shared_commands' => [
+		// 'start' => Acme\Project\Commands\StartCommand::class,
+		// 'stop' => Acme\Project\Commands\StopCommand::class,
+		// 'status' => Acme\Project\Commands\StatusCommand::class,
+	],
 ];

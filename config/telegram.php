@@ -99,6 +99,23 @@ return [
     */
 	'base_bot_url' => null,
 
+    'buttons' => [
+        'inlineIncClickButton' => [
+            'text' => 'Нажми меня!',
+            'callback_data' => 'incTelegramClick'
+        ]
+    ],
+
+    'messages' => [
+        'unknown_file' => 'Неизвестный файл',
+        'unknown_size' => 'Неизвестный размер',
+        'default_photo_caption' => 'добавьте подпись при отправке фото',
+        'unsupported_message_type' => 'Неподдерживаемый тип сообщения',
+        'file_info_template' => "Имя файла: {fileName}\nРазмер файла: {fileSize}",
+        'click_count_template' => 'Количество нажатий за всё время: {count}',
+        'user_not_found' => 'Пользователь не найден. Выполните команду /start',
+    ],
+
 	/*
     |--------------------------------------------------------------------------
     | Resolve Injected Dependencies in commands [Optional]
@@ -130,7 +147,7 @@ return [
     |
     */
 	'commands' => [
-		HelpCommand::class,
+		//HelpCommand::class,
 	],
 
 	/*

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\MessageSenderInterface;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
@@ -32,12 +33,18 @@ class TelegramBotService implements MessageSenderInterface
      * Отправляет простое сообщение
      * @throws TelegramSDKException
      */
-    public function sendMessage(int $chatId, string $text): void
+    public function sendMessage(int $chatId, string $text, ?string $parseMode = null): void
     {
-        Telegram::sendMessage([
+        $params = [
             'chat_id' => $chatId,
             'text' => $text,
-        ]);
+        ];
+
+        if ($parseMode) {
+            $params['parse_mode'] = $parseMode;
+        }
+
+        Telegram::sendMessage($params);
     }
 
     /**
@@ -73,7 +80,8 @@ class TelegramBotService implements MessageSenderInterface
     {
         return !empty($update) && (
             isset($update['callback_query']) ||
-            isset($update['message'])
+            isset($update['message']) ||
+            isset($update['my_chat_member'])
         );
     }
 
@@ -93,6 +101,11 @@ class TelegramBotService implements MessageSenderInterface
             // Обработка сообщений
             if (isset($update['message'])) {
                 $this->handleMessage($update['message']);
+            }
+
+            // Обработка блокировки
+            if (isset($update['my_chat_member'])) {
+                $this->handleChatMember($update['my_chat_member']);
             }
         } catch (Exception $e) {
             Log::error("TelegramBotService process update error: {$e->getMessage()}", [
@@ -155,6 +168,27 @@ class TelegramBotService implements MessageSenderInterface
             Log::error("TelegramBotService callback query error: {$e->getMessage()}", [
                 'exception' => $e,
                 'callback' => $callback
+            ]);
+            throw $e;
+        }
+    }
+
+    /**
+     * Обработка chat member
+     * @throws TelegramSDKException|Exception
+     */
+    public function handleChatMember(array $chatMember): void
+    {
+        try {
+            $chatId = $chatMember['chat']['id'];
+            $status = $chatMember['new_chat_member']['status'];
+
+            // Изменить статус
+            User::where('telegram_chat_id', $chatId)->update(['telegram_status' => $status]);
+        } catch (Exception $e) {
+            Log::error("TelegramBotService chat member error: {$e->getMessage()}", [
+                'exception' => $e,
+                'callback' => $chatMember
             ]);
             throw $e;
         }

@@ -42,6 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         'permissions'          => 'array',
         'email_verified_at'    => 'datetime',
+        'telegram_clicks'      => 'integer',
+        'telegram_chat_id'     => 'integer',
     ];
 
     /**
@@ -50,11 +52,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $allowedFilters = [
-           'id'         => Where::class,
-           'name'       => Like::class,
-           'email'      => Like::class,
-           'updated_at' => WhereDateStartEnd::class,
-           'created_at' => WhereDateStartEnd::class,
+           'id'              => Where::class,
+           'name'            => Like::class,
+           'email'           => Like::class,
+           'telegram_chat_id' => Where::class,
+           'telegram_status' => Like::class,
+           'telegram_clicks' => Where::class,
+           'updated_at'      => WhereDateStartEnd::class,
+           'created_at'      => WhereDateStartEnd::class,
     ];
 
     /**
@@ -66,6 +71,9 @@ class User extends Authenticatable
         'id',
         'name',
         'email',
+        'telegram_chat_id',
+        'telegram_status',
+        'telegram_clicks',
         'updated_at',
         'created_at',
     ];

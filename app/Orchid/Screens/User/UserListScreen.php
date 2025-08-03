@@ -14,6 +14,9 @@ use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
+use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\Exceptions\TelegramSDKException;
+use Illuminate\Support\Facades\Log;
 
 class UserListScreen extends Screen
 {
@@ -24,11 +27,13 @@ class UserListScreen extends Screen
      */
     public function query(): iterable
     {
+        $users = User::with('roles')
+            ->filters(UserFiltersLayout::class)
+            ->defaultSort('id', 'desc')
+            ->paginate(5);
+
         return [
-            'users' => User::with('roles')
-                ->filters(UserFiltersLayout::class)
-                ->defaultSort('id', 'desc')
-                ->paginate(),
+            'users' => $users,
         ];
     }
 
@@ -37,7 +42,7 @@ class UserListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'User Management';
+        return 'Управление пользователями';
     }
 
     /**
@@ -45,7 +50,7 @@ class UserListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'A comprehensive list of all registered users, including their profiles and privileges.';
+        return 'Полный список всех зарегистрированных пользователей с их профилями и привилегиями.';
     }
 
     public function permission(): ?iterable
@@ -63,7 +68,7 @@ class UserListScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make(__('Add'))
+            Link::make('Добавить')
                 ->icon('bs.plus-circle')
                 ->route('platform.systems.users.create'),
         ];
@@ -108,13 +113,13 @@ class UserListScreen extends Screen
 
         $user->fill($request->input('user'))->save();
 
-        Toast::info(__('User was saved.'));
+        Toast::info('Пользователь сохранен.');
     }
 
     public function remove(Request $request): void
     {
         User::findOrFail($request->get('id'))->delete();
 
-        Toast::info(__('User was removed'));
+        Toast::info('Пользователь удален');
     }
 }

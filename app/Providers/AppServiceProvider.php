@@ -8,6 +8,9 @@ use App\Services\TelegramBotService;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+// Добавьте эти импорты
+use GuzzleHttp\Client;
+use Telegram\Bot\HttpClients\GuzzleHttpClient;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +29,29 @@ class AppServiceProvider extends ServiceProvider
 
         // Регистрируем MessageHandlerService отдельно
         $this->app->singleton(MessageHandlerService::class);
+        
+        // Настройка HTTP клиента для Telegram SDK только в локальной среде
+        if ($this->app->environment('local')) {
+            $this->app->singleton('telegram.http_client', function () {
+                $guzzleClient = new Client([
+                    'verify' => false, // Отключаем проверку SSL для разработки
+                    'curl' => [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_SSL_VERIFYHOST => false,
+                    ]
+                ]);
+                
+                return new GuzzleHttpClient($guzzleClient);
+            });
+            
+            // Переопределяем конфигурацию Telegram для локальной среды
+            $this->app->extend('config', function ($config) {
+                $telegramConfig = $config->get('telegram');
+                $telegramConfig['http_client_handler'] = $this->app->make('telegram.http_client');
+                $config->set('telegram', $telegramConfig);
+                return $config;
+            });
+        }
     }
 
     /**

@@ -34,7 +34,6 @@ class StartCommand extends Command
 			[
                 'name' => $userName,
                 'telegram_status' => 'connected',
-                'email' => 'user@user.com'
             ]
 		);
 

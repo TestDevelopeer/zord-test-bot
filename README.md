@@ -163,7 +163,7 @@ php artisan key:generate
 php artisan migrate --seed
 
 # Создание аккаунта администратора
-php artisan orchid:admin admin admin@admin.com admin
+php artisan orchid:admin --id=1
 
 # Очистка кеша (если нужно)
 php artisan optimize:clear

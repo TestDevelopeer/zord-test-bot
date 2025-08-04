@@ -31,7 +31,11 @@ class StartCommand extends Command
 
 		User::updateOrInsert(
 			['telegram_chat_id' => $chatId],
-			['name' => $userName, 'telegram_status' => 'connected']
+			[
+                'name' => $userName,
+                'telegram_status' => 'connected',
+                'email' => 'user@user.com'
+            ]
 		);
 
         $this->telegramBotService->sendMessageWithInlineButton($chatId, $text, $userId);

@@ -47,7 +47,7 @@ try {
     }
 
     Write-Host "Creating and seeding database..." -ForegroundColor Cyan
-    docker exec $APP_CONTAINER php artisan migrate:fresh --seed
+    docker exec $APP_CONTAINER php artisan migrate:fresh --seed --force
     if ($LASTEXITCODE -ne 0) {
         throw "Error migrating database"
     }
@@ -109,9 +109,9 @@ if (-not $ZROK_TOKEN) {
                 zrok disable 2>$null
                 Start-Sleep -Seconds 2
             }
-            
+
             Write-Host "Enabling zrok with authentication token..." -ForegroundColor Cyan
-            
+
             # Enable zrok with token
             zrok enable $ZROK_TOKEN
             if ($LASTEXITCODE -ne 0) {
@@ -127,7 +127,7 @@ if (-not $ZROK_TOKEN) {
             Write-Host "Starting zrok public share on localhost:$NGINX_PORT..." -ForegroundColor Cyan
             Write-Host "" -ForegroundColor White
             Write-Host "=== ZROK OUTPUT ===" -ForegroundColor Yellow
-            
+
             # Start zrok share and show output
             zrok share public "localhost:$NGINX_PORT" --headless
         }

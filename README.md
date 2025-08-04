@@ -105,7 +105,7 @@ npm install
    ```
 3. **Установите webhook**, перейдя по адресу:
    ```
-   GET: http://localhost:8000/api/v1/telegram/set/webhook
+   GET: http://localhost:93/api/v1/telegram/set/webhook
    ```
 
 ### 7. Тестирование бота
@@ -219,9 +219,9 @@ zrok share public http://localhost:8000
 ## Порты и доступы
 
 ### С Docker (автоматический скрипт)
-- **Локальное приложение**: http://localhost:8000
-- **Админ панель**: http://localhost:8000 (login: admin@admin.com, password: admin)
-- **Webhook setup**: http://localhost:8000/api/v1/telegram/set/webhook
+- **Локальное приложение**: http://localhost:93
+- **Админ панель**: http://localhost:93 (login: admin@admin.com, password: admin)
+- **Webhook setup**: http://localhost:93/api/v1/telegram/set/webhook
 
 ### Без Docker (ручная настройка)
 - **Локальное приложение**: http://localhost:8000

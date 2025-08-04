@@ -105,7 +105,7 @@ npm install
    ```
 3. **Установите webhook**, перейдя по адресу:
    ```
-   GET: http://localhost:93/api/v1/telegram/set/webhook
+   GET: http://localhost:8000/api/v1/telegram/set/webhook
    ```
 
 ### 7. Тестирование бота
@@ -172,11 +172,11 @@ php artisan optimize:clear
 ### 5. Запуск сервера разработки
 
 ```powershell
-# Запуск Laravel сервера на порту 93 (8000 после туннелирования не выставляет вебхук почему-то...)
-php artisan serve --port=93
+# Запуск Laravel сервера
+php artisan serve
 ```
 
-Приложение будет доступно по адресу: http://localhost:93
+Приложение будет доступно по адресу: http://localhost:8000
 
 ### 6. Настройка Zrok туннелирования
 
@@ -187,7 +187,7 @@ php artisan serve --port=93
 zrok enable your_zrok_auth_token
 
 # Создание публичного туннеля
-zrok share public http://localhost:93
+zrok share public http://localhost:8000
 ```
 
 Скопируйте публичный URL, который выведет Zrok.
@@ -201,7 +201,7 @@ zrok share public http://localhost:93
 
 2. **Установите webhook**, перейдя по адресу:
    ```
-   http://localhost:93/api/v1/telegram/set/webhook
+   http://localhost:8000/api/v1/telegram/set/webhook
    ```
 
 ### 8. Тестирование
@@ -219,14 +219,14 @@ zrok share public http://localhost:93
 ## Порты и доступы
 
 ### С Docker (автоматический скрипт)
-- **Локальное приложение**: http://localhost:93
-- **Админ панель**: http://localhost:93 (login: admin@admin.com, password: admin)
-- **Webhook setup**: http://localhost:93/api/v1/telegram/set/webhook
+- **Локальное приложение**: http://localhost:8000
+- **Админ панель**: http://localhost:8000 (login: admin@admin.com, password: admin)
+- **Webhook setup**: http://localhost:8000/api/v1/telegram/set/webhook
 
 ### Без Docker (ручная настройка)
-- **Локальное приложение**: http://localhost:93
-- **Админ панель**: http://localhost:93 (login: admin@admin.com, password: admin)
-- **Webhook setup**: http://localhost:93/api/v1/telegram/set/webhook
+- **Локальное приложение**: http://localhost:8000
+- **Админ панель**: http://localhost:8000 (login: admin@admin.com, password: admin)
+- **Webhook setup**: http://localhost:8000/api/v1/telegram/set/webhook
 
 ### Общие endpoints
 - **Публичный доступ**: URL, предоставленный Zrok
